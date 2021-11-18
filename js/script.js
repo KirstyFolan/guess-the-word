@@ -24,6 +24,8 @@ const playAgain = document.querySelector("button", ".hide");
 
 const word = "magnolia";
 
+guessedLetters = [];
+
 //======== PLACEHOLDER CIRCLES FOR WORD ==================
 
 const placeholderCircles = function(word) {
@@ -41,10 +43,42 @@ placeholderCircles(word);
 
 button.addEventListener("click", function(e) {
     e.preventDefault();
+    message.innerText = "";
     let userInput = playerInput.value;
-    console.log(userInput);
-    userInput = "";
+    //console.log(userInput);
+    const inputChecker = checkInput(userInput);
+    //console.log(inputChecker);
+    if(inputChecker) {
+        makeGuess(userInput);
+    }
+    userInput.value = "";
 
 })
 
-//Create and name a variable to capture the value of the input. Log out the value of the variable capturing the input. Then, empty the value of the input. You should see the letter you enter into the input field in the console when the Guess button is clicked. 
+//=====CHECK PLAYER'S INPUT==================
+
+const checkInput = function(input) {
+    const acceptedLetter = /[a-zA-Z]/;
+    if(input.length === 0){
+        message.innerText = "Please input a letter";
+    } else if(input.length > 1) {
+        message.innerText = "Please just enter one letter at a time";
+    } else if(!input.match(acceptedLetter)) {
+        message.innerText = "Please enter a letter"
+    } else {
+        return input;
+    }
+};
+
+//=======CAPTURE INPUT ==================
+
+const makeGuess = function(userInput){
+    userInput = userInput.toUpperCase();
+        if(guessedLetters.includes(userInput)){
+            message.innerText = "You've already tried this letter. Try again"
+        } else {
+            guessedLetters.push(userInput);
+            console.log(guessedLetters);
+        }
+    };
+
