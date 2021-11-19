@@ -22,9 +22,26 @@ const message = document.querySelector("p", "message");
 const playAgain = document.querySelector("button", ".hide");
 //The hidden button that will appear prompting the player to play again.
 
-const word = "magnolia";
+let word = "magnolia";
 
-guessedLetters = [];
+const guessedLetters = [];
+
+let guessesRemaining = 8;
+
+const getWord = async function () {
+const response = await fetch('https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt');
+const data = await response.text();
+//console.log(data);
+const wordArray = data.split("\n");
+//console.log(wordArray);
+const randomIndex = Math.floor(Math.random()*wordArray.length);
+    word = wordArray[randomIndex].trim();
+    placeholderCircles(word);
+
+};
+getWord();
+
+
 
 //======== PLACEHOLDER CIRCLES FOR WORD ==================
 
@@ -37,7 +54,7 @@ const placeholderCircles = function(word) {
     }
     
 };
-placeholderCircles(word);
+
 
 //======= GUESS BUTTON EVENT LISTENER =================
 
@@ -79,6 +96,7 @@ const makeGuess = function(userInput){
         } else {
             guessedLetters.push(userInput);
             console.log(guessedLetters);
+            countGuessesRemaining(userInput);
             showGuessedLetters();
             updateWordInProgress(guessedLetters);
         }
@@ -115,6 +133,28 @@ for (let letter of wordArray) {
 
 };
 
+//=============== NUMBER OF GUESSES ========================
+
+const countGuessesRemaining = function (userInput) {
+    const upperWord = word.toUpperCase();
+    if (!upperWord.includes(userInput)) {
+        message.innerText = `Sorry, the word has no ${userInput}.`;
+        guessesRemaining -= 1;
+      } else {
+        message.innerText = `Good guess! The word has the letter ${userInput}.`;
+      }
+
+        if (guessesRemaining === 0) {
+            message.innerHTML = `Game over. The word was <span class = "highlight> ${word}</span>`;
+        } else if (guessesRemaining === 1) {
+            numGuesses.innerText = "1 guess";
+        } else {
+            numGuesses.innerText = `${guessesRemaining} guesses`
+        }
+    
+
+};
+
 //================ DID PLAYER WIN? =========================
 
 const didPlayerWin = function() {
@@ -124,3 +164,4 @@ const didPlayerWin = function() {
 
     }
 };
+
