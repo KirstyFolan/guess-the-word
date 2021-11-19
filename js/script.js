@@ -79,6 +79,48 @@ const makeGuess = function(userInput){
         } else {
             guessedLetters.push(userInput);
             console.log(guessedLetters);
+            showGuessedLetters();
+            updateWordInProgress(guessedLetters);
         }
     };
 
+//======== SHOW GUESSED LETTERS ===========
+
+const showGuessedLetters = function() {
+    lettersGuessed.innerHTML = "";
+    for(const letter of guessedLetters) {
+    let li = document.createElement("li");
+    li.innerText = letter;
+    lettersGuessed.append(li);
+    }
+
+};
+
+//========= UPDATE WORD IN PROGRESS ===========
+
+const updateWordInProgress = function(guessedLetters) {
+const wordUpper = word.toUpperCase();
+const wordArray = wordUpper.split("");
+//console.log(wordArray);
+const updatedWord = [];
+for (let letter of wordArray) {
+    if (guessedLetters.includes(letter)) {
+        updatedWord.push(letter.toUpperCase());
+    } else {
+        updatedWord.push("●")
+    }
+}
+        wordInProgress.innerText = updatedWord.join("");
+        didPlayerWin();
+
+};
+
+//================ DID PLAYER WIN? =========================
+
+const didPlayerWin = function() {
+    if (wordInProgress.innerText === word.toUpperCase()) {
+        message.classList.add("win");
+        message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>';
+
+    }
+};
