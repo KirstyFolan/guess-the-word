@@ -7,6 +7,8 @@ const button = document.querySelector(".guess");
 const playerInput = document.querySelector(".letter");
 //The text input where the player will guess a letter.
 
+const letterLabel = document.querySelector(".letter-label");
+
 const wordInProgress = document.querySelector(".word-in-progress");
 //The empty paragraph where the word in progress will appear.
 
@@ -95,6 +97,7 @@ const checkInput = function(input) {
 //=======CAPTURE INPUT ==================
 
 const makeGuess = function(userInput){
+    
     userInput = userInput.toUpperCase();
         if(guessedLetters.includes(userInput)){
             message.innerText = "You've already tried this letter. Try again"
@@ -178,22 +181,29 @@ const didPlayerWin = function() {
 
 const startOver = function() {
     button.classList.add("hide");
+    playerInput.classList.add("hide");
     remainingGuesses.classList.add("hide");
     lettersGuessed.classList.add("hide");
     playAgain.classList.remove("hide");
+    letterLabel.classList.add("hide");
+    
+
     
 };
 
 playAgain.addEventListener("click", function(){
 message.classList.remove("win");
+message.innerText= '';
 guessedLetters = [];
 guessesRemaining = 8;
 numGuesses.innerText = `${guessesRemaining} guesses`;
 lettersGuessed.innerHTML = "";
 getWord();
 
-button.classList.remove("hide");
 playAgain.classList.add("hide");
+button.classList.remove("hide");
+letterLabel.classList.remove("hide");
+playerInput.classList.remove("hide");
 remainingGuesses.classList.remove("hide");
 lettersGuessed.classList.remove("hide");
 });
