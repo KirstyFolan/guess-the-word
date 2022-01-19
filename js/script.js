@@ -191,6 +191,7 @@ const startOver = function() {
 
 playAgain.addEventListener("click", function(){
 message.classList.remove("win");
+message.innerHTML = '';
 guessedLetters = [];
 guessesRemaining = 8;
 numGuesses.innerText = `${guessesRemaining} guesses`;
