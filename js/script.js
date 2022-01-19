@@ -7,6 +7,9 @@ const button = document.querySelector(".guess");
 const playerInput = document.querySelector(".letter");
 //The text input where the player will guess a letter.
 
+const letterLabel = document.querySelector(".letter-label");
+//The label telling players to type one letter
+
 const wordInProgress = document.querySelector(".word-in-progress");
 //The empty paragraph where the word in progress will appear.
 
@@ -181,6 +184,8 @@ const startOver = function() {
     remainingGuesses.classList.add("hide");
     lettersGuessed.classList.add("hide");
     playAgain.classList.remove("hide");
+    playerInput.classList.add("hide");
+    letterLabel.classList.add("hide");
     
 };
 
@@ -196,5 +201,7 @@ button.classList.remove("hide");
 playAgain.classList.add("hide");
 remainingGuesses.classList.remove("hide");
 lettersGuessed.classList.remove("hide");
+playerInput.classList.remove("hide");
+letterLabel.classList.remove("hide");
 });
 
